@@ -1,0 +1,6 @@
+name=Crank Example
+author=Jake Allan
+description=This project visualises the angle of the crank arm
+bundleID=com.jankygames.package
+version=0.0.1
+buildNumber=1

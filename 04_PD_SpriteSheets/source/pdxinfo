@@ -1,0 +1,6 @@
+name=DinoRun
+author=Jake Allan
+description=This a copy of chromes dino run game
+bundleID=com.jankygames.package
+version=0.0.1
+buildNumber=1

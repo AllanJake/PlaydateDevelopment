@@ -1,0 +1,6 @@
+name=Template
+author=Jake Allan
+description=This is template project
+bundleID=com.jankygames.package
+version=0.0.1
+buildNumber=1
