@@ -10,33 +10,20 @@ import "CoreLibs/animation"
 
 import "Dino/dino"
 
-
-
 local gfx <const> = playdate.graphics
--- local dinoRun, result = gfx.imagetable.new("Dino/dino")
--- if (result == nil)	then 	print("Image Table Loaded Successfully")
--- else 						print("ERROR:", result)
--- end
-
-local dinoImages, result = playdate.graphics.imagetable.new("Dino/dino")
-    if (result == nil)	then 	print("Image Table Loaded Successfully")
-    else 						print("ERROR:", result)
-    end 
 
 
-local anim = gfx.animation.loop.new(100, dinoImages)
-anim.startFrame = 3
-anim.endFrame = 4
-
+local dino = Dino(120, 120)
 local function loadGame()
 	playdate.display.setRefreshRate(50) -- Sets framerate to 50 fps
 	xPos = 70
 	yPos = 180
-	local dino = Dino()
+	
 end
 
 local function updateGame()
-	
+	gfx.sprite.update()
+	dino:updateTransform(xPos, yPos)
 end
 
 local function DrawDebugText()
@@ -47,8 +34,7 @@ end
 
 local function drawGame()
 	-- gfx.clear() -- Clears the screen
-	anim:draw(xPos - anim:image():getSize() / 2, yPos - anim:image():getSize() / 2)
-	-- DrawDebugText()
+	DrawDebugText()
 end
 
 loadGame()
@@ -64,3 +50,12 @@ function playdate.leftButtonDown() 			xPos = xPos - 1		end
 function playdate.rightButtonDown() 		xPos = xPos + 1		end
 function playdate.upButtonDown() 			yPos = yPos - 1		end
 function playdate.downButtonDown() 			yPos = yPos + 1		end
+function playdate.AButtonDown()				
+	print("press")
+	dino:setState("run") 
+	dino:setJumping(true)
+end
+function playdate.AButtonUp()
+	dino:setJumping(false)
+	dino:setFallHeight()
+end
