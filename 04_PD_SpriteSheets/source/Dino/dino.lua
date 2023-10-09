@@ -1,5 +1,6 @@
 import "CoreLibs/sprites"
 import "CoreLibs/animation"
+import "CoreLibs/timer"
 
 local gfx <const> = playdate.graphics
 
@@ -29,8 +30,10 @@ function Dino:init(x, y)
     self.activeAnimation = self.waitAnim
 
     -- 180 is the position of the dino on the ground. 115 should be the max jump
-    self.jumpUp = gfx.animator.new(300, 180, 125)
-    self.fall = gfx.animator.new(200, self.transform.y, 180)
+    self.jumpUp = gfx.animator.new(280, 180, 135)
+    self.jumpUp.reverses = true
+    self.jumpUp.repeatCount = 1
+    self.fall = gfx.animator.new(200, 135, 180)
     self.isJumping = false
     self.isGrounded = true
 
@@ -43,7 +46,7 @@ end
 function Dino:update()
     Dino.super.update(self)
     self:setImage(self.activeAnimation:image())
-    self:jump(self.isJumping)
+    self:updateJumping()
 end
 
 function Dino:updateTransform(x, y)
@@ -63,24 +66,19 @@ function Dino:setState(state)
     end
 end
 
-function Dino:jump(isJumping)    
-    if isJumping == true then
+function Dino:updateJumping()    
+    if self.isJumping == true then
         local yVal = self.jumpUp:currentValue()
         self:updateTransform(self.transform.x, yVal)
         self.isGrounded = false
-    elseif isJumping == false and self.isGrounded == false then   
-        local yVal = self.fall:currentValue()
-        self:updateTransform(self.transform.x, yVal)
-    end
-
-    if self.transform.y == 180 then
-        self.isGrounded = true
-        self.jumpUp:reset()
-        self.fall:reset()
+        print(yVal)
     end
 end
 
-function Dino:setJumping(jump)
+
+
+
+function Dino:jumpPressed(jump)
     self.isJumping = jump
 end
 

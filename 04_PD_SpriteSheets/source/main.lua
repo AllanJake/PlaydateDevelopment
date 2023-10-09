@@ -9,15 +9,17 @@ import "CoreLibs/timer"
 import "CoreLibs/animation"
 
 import "Dino/dino"
+import "Ground/ground"
 
 local gfx <const> = playdate.graphics
 
-
+local ground = Ground()
 local dino = Dino(120, 120)
 local function loadGame()
 	playdate.display.setRefreshRate(50) -- Sets framerate to 50 fps
 	xPos = 70
 	yPos = 180
+
 	
 end
 
@@ -35,6 +37,7 @@ end
 local function drawGame()
 	-- gfx.clear() -- Clears the screen
 	DrawDebugText()
+	
 end
 
 loadGame()
@@ -53,9 +56,9 @@ function playdate.downButtonDown() 			yPos = yPos + 1		end
 function playdate.AButtonDown()				
 	print("press")
 	dino:setState("run") 
-	dino:setJumping(true)
+	dino:jumpPressed(true)
 end
 function playdate.AButtonUp()
-	dino:setJumping(false)
+	dino:jumpPressed(false)
 	dino:setFallHeight()
 end
